@@ -5,5 +5,3 @@ get('/') do
     erb(:index)
 end
 
-bla bla bla
-
