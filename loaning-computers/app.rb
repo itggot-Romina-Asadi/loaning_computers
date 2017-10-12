@@ -30,3 +30,14 @@ get('/students/:id/update/:name/:pnr') do
     db.execute("UPDATE students SET name=?, pnr=? WHERE id=?", new_name, new_pnr, student_id)
     redirect('/students/'+student_id)
 end
+
+post('/students/create') do
+    redirect("/students/" + "create/" + params["new_name"] + "/" + params["new_pnr"])
+end
+
+get('/students/create/:name/:pnr') do
+    db = SQLite3::Database.new("computers_and_loans.sqlite")
+    new_name = params[:name]
+    new_pnr = params[:pnr]
+    db.execute("INSERT INTO students (name, pnr) VALUES (?, ?)", new_name, new_pnr)
+end
