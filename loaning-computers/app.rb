@@ -5,6 +5,10 @@ get('/') do
     erb(:index)
 end
 
+post('/students/find_by_id') do
+    redirect("/students/" + params["student_id"])
+end
+
 get('/students/:id') do
     db = SQLite3::Database.new("computers_and_loans.sqlite")
     student_id = params[:id]
@@ -14,6 +18,11 @@ get('/students/:id') do
 end
 
 get('/students/:id/update') do
+    db = SQLite3::Database.new("computers_and_loans_sqlite")
+    student_id = params[:id]
+    new_name = params[:name]
+    new_pnr = params[:pnr]
+    result = db.execute("UPDATE students SET name="+new_name "AND pnr="+new_pnr "WHERE id="+student_id)
 
 end
 
