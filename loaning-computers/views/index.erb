@@ -1,5 +1,16 @@
 <% %>
+
+<h1>Search by student ID</h1>
 <form action="/students/find_by_id" method="POST">
     <input class="search_field" type="text" name="student_id">
     <input type="submit" value="Search">
+</form>
+
+
+<h1>Update student</h1>
+<form action="/students/update" method="POST">
+    <h3>Id:</h3><input class="search_field" type="text" name="student_id">
+    <h3>New Name:</h3><input class="search_field" type="text" name="new_name">
+    <h3>New Pnr</h3><input class="search_field" type="text" name="new_pnr">
+    <input type="submit" value="Update">
 </form>

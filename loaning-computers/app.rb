@@ -17,31 +17,16 @@ get('/students/:id') do
     erb(:students, locals:{ student:result} )
 end
 
-get('/students/:id/update') do
-    db = SQLite3::Database.new("computers_and_loans_sqlite")
+post('/students/update') do
+    redirect("/students/" + params["student_id"] + "/update/" + params["new_name"] + "/" + params["new_pnr"])
+end
+
+get('/students/:id/update/:name/:pnr') do
+    db = SQLite3::Database.new("computers_and_loans.sqlite")
     student_id = params[:id]
     new_name = params[:name]
     new_pnr = params[:pnr]
-    result = db.execute("UPDATE students SET name="+new_name "AND pnr="+new_pnr "WHERE id="+student_id)
-
-end
-
-get('/students/:id/delete') do
-
-end
-
-get('/students/create') do
-
-end
-
-post('/students/:id/update') do
-
-end
-
-post('/students/:id/delete') do
-
-end
-
-post('/students/create') do
-
+    # db.execute("UPDATE students SET name="+new_name+"WHERE id="+student_id)
+    db.execute("UPDATE students SET name=?, pnr=? WHERE id=?", new_name, new_pnr, student_id)
+    redirect('/students/'+student_id)
 end
