@@ -40,4 +40,17 @@ get('/students/create/:name/:pnr') do
     new_name = params[:name]
     new_pnr = params[:pnr]
     db.execute("INSERT INTO students (name, pnr) VALUES (?, ?)", new_name, new_pnr)
+    # student_id = db.execute("SELECT MAX(id) FROM students").to_s
+    # redirect('/students/'+student_id)
+end
+
+post('/students/delete') do
+    redirect("/students/" + params["student_id"] + "/delete")    
+end
+
+get('/students/:id/delete') do
+    db = SQLite3::Database.new("computers_and_loans.sqlite")
+    student_id = params[:id]
+    db.execute("DELETE FROM students WHERE id="+student_id)
+    redirect('/')
 end
