@@ -6,13 +6,26 @@ get('/') do
 end
 
 post('/students/find_by_id') do
-    redirect("/students/" + params["student_id"])
+    redirect("/students/by_id/" + params["student_id"])
 end
 
-get('/students/:id') do
+get('/students/by_id/:id') do
     db = SQLite3::Database.new("computers_and_loans.sqlite")
     student_id = params[:id]
     result = db.execute("SELECT * FROM students WHERE id="+student_id)
+    result = result[0]
+    erb(:students, locals:{ student:result} )
+end
+
+post('/students/find_by_name') do
+    redirect("/students/by_name/" + params["student_name"])
+end
+
+# Fixa loop så den får fram alla som heter samma
+get('/students/by_name/:name') do
+    db = SQLite3::Database.new("computers_and_loans.sqlite")
+    student_name = params[:name]
+    result = db.execute("SELECT * FROM students WHERE name LIKE '%"+student_name+"%'")
     result = result[0]
     erb(:students, locals:{ student:result} )
 end
