@@ -67,3 +67,29 @@ get('/students/:id/delete') do
     db.execute("DELETE FROM students WHERE id="+student_id)
     redirect('/')
 end
+
+#Visa namn på elev som äger datorn
+post('/computers/find_by_id') do
+    redirect("/computers/by_id/" + params["computer_id"])
+end
+
+get('/computers/by_id/:id') do
+    db = SQLite3::Database.new("computers_and_loans.sqlite")
+    computer_id = params[:id]
+    result = db.execute("SELECT * FROM computers WHERE id="+computer_id)
+    result = result[0]
+    erb(:computers, locals:{ computer:result} )
+end
+
+post('/computers/find_by_model') do
+    redirect("/computers/by_model/" + params["computer_model"])
+end
+
+get('/computers/by_model/:model') do
+    db = SQLite3::Database.new("computers_and_loans.sqlite")
+    computer_model = params[:model]
+    computer_id = db.execute("SELECT id FROM computer_models WHERE model LIKE '%"+computer_model+"%'")
+    computer_id = computer_id[0][0].to_s
+    result = db.execute("SELECT * FROM computers WHERE model_id="+computer_id)
+    erb(:computers, locals:{ computer:result} )
+end
