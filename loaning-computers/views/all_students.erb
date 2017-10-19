@@ -1,9 +1,24 @@
-<% 
-i = 0
-while students.length > i 
-%>
-<h1><%= students[i][0] %>
-<%= students[i][1] %>
-<%= students[i][2] %></h1>
-<% i+= 1
-end %>
+<%if students == nil%>
+    <p>Eleven skaffa vingar och flög iväg</p>
+    <a href="/">Tillbaka<a>
+<%else%>
+    <table>
+        <thead>
+            <th class="text">ID</th>
+            <th class="text">Name</th>
+            <th class="text">Social Security Number</th>
+        </thead>
+        <tbody>
+        <% i= 0
+        while students.length > i%>
+            <tr>
+                <td class="text"><%= students[i][0] %></td>
+                <td class="text"><%= students[i][1] %></td>
+                <td class="text"><%= students[i][2] %></td>
+            </tr>
+            <% i+=1 
+            end %>
+        </tbody>
+    </table>
+    <a href="/">Tillbaka</a>
+<%end%>
