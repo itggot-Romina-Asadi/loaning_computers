@@ -5,6 +5,12 @@ get('/') do
     erb(:index)
 end
 
+get('/all_students') do
+    db = SQLite3::Database.new("computers_and_loans.sqlite")
+    result = db.execute("SELECT * FROM students")
+    erb(:all_students, locals:{ students:result} )
+end
+
 post('/students/find_by_id') do
     redirect("/students/by_id/" + params["student_id"])
 end
@@ -41,7 +47,7 @@ get('/students/:id/update/:name/:pnr') do
     new_pnr = params[:pnr]
     # db.execute("UPDATE students SET name="+new_name+"WHERE id="+student_id)
     db.execute("UPDATE students SET name=?, pnr=? WHERE id=?", new_name, new_pnr, student_id)
-    redirect('/students/'+student_id)
+    redirect('/students/by_id/'+student_id)
 end
 
 post('/students/create') do
@@ -53,8 +59,8 @@ get('/students/create/:name/:pnr') do
     new_name = params[:name]
     new_pnr = params[:pnr]
     db.execute("INSERT INTO students (name, pnr) VALUES (?, ?)", new_name, new_pnr)
-    # student_id = db.execute("SELECT MAX(id) FROM students").to_s
-    # redirect('/students/'+student_id)
+    student_id = db.execute("SELECT MAX(id) FROM students").to_s
+    redirect('/students/'+student_id)
 end
 
 post('/students/delete') do
@@ -66,6 +72,12 @@ get('/students/:id/delete') do
     student_id = params[:id]
     db.execute("DELETE FROM students WHERE id="+student_id)
     redirect('/')
+end
+
+get('/all_computers') do
+    db = SQLite3::Database.new("computers_and_loans.sqlite")
+    result = db.execute("SELECT * FROM computers")
+    erb(:all_computers, locals:{ computers:result} )
 end
 
 #Visa namn på elev som äger datorn
@@ -94,9 +106,16 @@ get('/computers/by_model/:model') do
     erb(:computers, locals:{ computer:result} )
 end
 
+get('/computers_create') do
+    erb(:computers_create)
+end
 
-get('/students_all_students') do
+post('/computers_create') do
     db = SQLite3::Database.new("computers_and_loans.sqlite")
-    result = db.execute("SELECT * FROM students")
-    erb(:all_students, locals:{ students:result} )
+    serial_no = params["serial-no"]
+    model_id = params["model-id"]
+    student_id = params["student-id"]
+    db.execute("INSERT INTO computers(serial, model_id, student_id) VALUES(?,?,?)", [serial_no, model_id, student_id])
+    computer_id = db.execute("SELECT MAX(id) FROM computers").to_s
+    redirect("/computers/#{computer_id}")
 end
