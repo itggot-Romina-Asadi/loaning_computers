@@ -93,3 +93,10 @@ get('/computers/by_model/:model') do
     result = db.execute("SELECT * FROM computers WHERE model_id="+computer_id)
     erb(:computers, locals:{ computer:result} )
 end
+
+
+get('/students_all_students') do
+    db = SQLite3::Database.new("computers_and_loans.sqlite")
+    result = db.execute("SELECT * FROM students")
+    erb(:all_students, locals:{ students:result} )
+end
