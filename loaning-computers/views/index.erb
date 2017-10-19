@@ -50,3 +50,18 @@
     <input type="submit" value="Search">
 </form>
 
+<h1>Delete computer</h1>
+<form action="/computers/delete" method="POST">
+    <input class="search_field" type="text" name="computer_id">
+    <input type="submit" value="Delete">
+</form>
+
+<h1>Update computer</h1>
+<form action="/computers/update" method="POST">
+    <h3>Id:</h3><input class="search_field" type="text" name="id">
+    <h3>New Serial No:</h3><input class="search_field" type="text" name="new_serial">
+    <h3>New model ID</h3><input class="search_field" type="text" name="new_model_id">
+    <h3>New student ID</h3><input class="search_field" type="text" name="new_student_id">
+    <input type="submit" value="Update">
+</form>
+

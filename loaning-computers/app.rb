@@ -58,9 +58,10 @@ get('/students/create/:name/:pnr') do
     db = SQLite3::Database.new("computers_and_loans.sqlite")
     new_name = params[:name]
     new_pnr = params[:pnr]
-    db.execute("INSERT INTO students (name, pnr) VALUES (?, ?)", new_name, new_pnr)
-    student_id = db.execute("SELECT MAX(id) FROM students").to_s
-    redirect('/students/'+student_id)
+    db.execute("INSERT INTO students (name, pnr) VALUES (?, ?)", [new_name, new_pnr])
+    student_id = db.execute("SELECT MAX(id) FROM students")
+    student_id = student_id[0][0].to_s
+    redirect('/students/by_id/'+student_id)
 end
 
 post('/students/delete') do
@@ -116,6 +117,33 @@ post('/computers_create') do
     model_id = params["model-id"]
     student_id = params["student-id"]
     db.execute("INSERT INTO computers(serial, model_id, student_id) VALUES(?,?,?)", [serial_no, model_id, student_id])
-    computer_id = db.execute("SELECT MAX(id) FROM computers").to_s
-    redirect("/computers/#{computer_id}")
+    computer_id = db.execute("SELECT MAX(id) FROM computers")
+    computer_id = computer_id[0][0].to_s
+    redirect("/computers/by_id/#{computer_id}")
+end
+
+post('/computers/delete') do
+    redirect("/computers/" + params["computer_id"] + "/delete")    
+end
+
+get('/computers/:id/delete') do
+    db = SQLite3::Database.new("computers_and_loans.sqlite")
+    computer_id = params[:id]
+    db.execute("DELETE FROM computers WHERE id="+computer_id)
+    redirect('/')
+end
+
+post('/computers/update') do
+    redirect("/computers/" + params["computer_id"] + "/update/" + params["new_serial"] + "/" + params["new_model_id"] + "/" + params["new_student_id"])
+end
+
+get('/computers/:id/update/:serial/:model_id/:student_id') do
+    db = SQLite3::Database.new("computers_and_loans.sqlite")
+    computer_id = params[:id]
+    new_student_id = params[:student_id]
+    new_serial = params[:serial]
+    new_model_id = params[:model_id]
+    # db.execute("UPDATE students SET name="+new_name+"WHERE id="+student_id)
+    db.execute("UPDATE computers SET serial=?, model_id=?, student_id=? WHERE id=?", new_serial, new_model_id, new_student_id)
+    redirect('/computers/by_id/'+computer_id)
 end
