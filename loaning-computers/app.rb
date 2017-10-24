@@ -32,8 +32,7 @@ get('/students/by_name/:name') do
     db = SQLite3::Database.new("computers_and_loans.sqlite")
     student_name = params[:name]
     result = db.execute("SELECT * FROM students WHERE name LIKE '%"+student_name+"%'")
-    result = result[0]
-    erb(:students, locals:{ student:result} )
+    erb(:all_students, locals:{ students:result} )
 end
 
 post('/students/update') do
@@ -91,7 +90,9 @@ get('/computers/by_id/:id') do
     computer_id = params[:id]
     result = db.execute("SELECT * FROM computers WHERE id="+computer_id)
     result = result[0]
-    erb(:computers, locals:{ computer:result} )
+    student_name = db.execute("SELECT name FROM students WHERE id="+result[3].to_s)
+    student_name = student_name[0]
+    erb(:computers, locals:{ computer:result, student_name:student_name} )
 end
 
 post('/computers/find_by_model') do
@@ -144,6 +145,6 @@ get('/computers/:id/update/:serial/:model_id/:student_id') do
     new_serial = params[:serial]
     new_model_id = params[:model_id]
     # db.execute("UPDATE students SET name="+new_name+"WHERE id="+student_id)
-    db.execute("UPDATE computers SET serial=?, model_id=?, student_id=? WHERE id=?", new_serial, new_model_id, new_student_id)
+    db.execute("UPDATE computers SET serial=?, model_id=?, student_id=? WHERE id=?", new_serial, new_model_id, new_student_id, computer_id)
     redirect('/computers/by_id/'+computer_id)
 end

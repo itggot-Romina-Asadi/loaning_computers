@@ -1,67 +1,76 @@
 <% %>
 
-<h1><a href="/all_students">Show all students</a></h1>
+<div class="students">
 
-<h1>Search by student ID</h1>
+<h2><a href="/all_students">Show all students</a></h2>
+
+<h2>Search by student ID</h2>
 <form action="/students/find_by_id" method="POST">
     <input class="search_field" type="text" name="student_id">
     <input type="submit" value="Search">
 </form>
 
-<h1>Search by student name</h1>
+<h2>Search by student name</h2>
 <form action="/students/find_by_name" method="POST">
-    <input class="search_field" type="text" name="student_name">
+    <input class="search_field" type="text" placeholder="Name" name="student_name">
     <input type="submit" value="Search">
 </form>
 
-
-<h1>Update student</h1>
+<h2>Update student</h2>
 <form action="/students/update" method="POST">
-    <h3>Id:</h3><input class="search_field" type="text" name="student_id">
-    <h3>New Name:</h3><input class="search_field" type="text" name="new_name">
-    <h3>New Pnr</h3><input class="search_field" type="text" name="new_pnr">
+    <p>Id:</p><input class="search_field" type="text" name="student_id">
+    <p>New Name:</p><input class="search_field" type="text" name="new_name">
+    <p>New Pnr</p><input class="search_field" type="text" name="new_pnr">
     <input type="submit" value="Update">
 </form>
 
-<h1>Create new student</h1>
+<h2>Create new student</h2>
 <form action="/students/create" method="POST">
-    <h3>Name:</h3><input class="search_field" type="text" name="new_name">
-    <h3>Pnr</h3><input class="search_field" type="text" name="new_pnr">
+    <p>Name:</p><input class="search_field" type="text" name="new_name">
+    <p>Pnr</p><input class="search_field" type="text" name="new_pnr">
     <input type="submit" value="Create">
 </form>
 
-<h1>Delete student</h1>
+<h2>Delete student</h2>
 <form action="/students/delete" method="POST">
+<p>Student id:</p>
     <input class="search_field" type="text" name="student_id">
     <input type="submit" value="Delete">
 </form>
 
-<h1><a href="/all_students">Show all computers</a></h1>
+</div>
 
-<h1>Search by computer ID</h1>
+<div class="computers">
+
+<h2><a href="/all_computers">Show all computers</a></h2>
+
+
+<h2>Search by computer ID</h2>
 <form action="/computers/find_by_id" method="POST">
     <input class="search_field" type="text" name="computer_id">
     <input type="submit" value="Search">
 </form>
 
-<h1>Search by computer brand</h1>
+<h2>Search by computer brand</h2>
 <form action="/computers/find_by_model" method="POST">
     <input class="search_field" type="text" name="computer_model">
     <input type="submit" value="Search">
 </form>
 
-<h1>Delete computer</h1>
+<h2>Delete computer</h2>
 <form action="/computers/delete" method="POST">
     <input class="search_field" type="text" name="computer_id">
     <input type="submit" value="Delete">
 </form>
 
-<h1>Update computer</h1>
+<h2>Update computer</h2>
 <form action="/computers/update" method="POST">
-    <h3>Id:</h3><input class="search_field" type="text" name="id">
-    <h3>New Serial No:</h3><input class="search_field" type="text" name="new_serial">
-    <h3>New model ID</h3><input class="search_field" type="text" name="new_model_id">
-    <h3>New student ID</h3><input class="search_field" type="text" name="new_student_id">
+    <p>Id:</p><input class="search_field" type="text" name="computer_id">
+    <p>New Serial No:</p><input class="search_field" type="text" name="new_serial">
+    <p>New model ID</p><input class="search_field" type="text" name="new_model_id">
+    <p>New student ID</p><input class="search_field" type="text" name="new_student_id">
     <input type="submit" value="Update">
 </form>
+
+</div>
 
